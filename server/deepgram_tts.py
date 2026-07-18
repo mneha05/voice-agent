@@ -26,6 +26,8 @@ class DeepgramTTS:
         self._ws: websockets.WebSocketClientProtocol | None = None
         self._recv_task: asyncio.Task | None = None
         self.closed = asyncio.Event()
+        # Set when Deepgram signals it has rendered everything we asked for.
+        self.flushed = asyncio.Event()
 
     async def connect(self) -> None:
         params = {
@@ -57,7 +59,14 @@ class DeepgramTTS:
             async for message in self._ws:
                 if isinstance(message, bytes):
                     await self._on_audio(message)
-                # JSON control frames (Metadata / Flushed / Warning) are ignored.
+                else:
+                    # Control frame. "Flushed" means our Flush finished rendering
+                    # — that's our "done speaking this turn" signal.
+                    try:
+                        if json.loads(message).get("type") == "Flushed":
+                            self.flushed.set()
+                    except (ValueError, AttributeError):
+                        pass
         except websockets.ConnectionClosed:
             pass
         finally:

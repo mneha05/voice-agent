@@ -149,8 +149,13 @@ class Session:
             await tts.flush()
             await self._send_json({"type": "agent", "text": spoken.strip()})
             self.history.append({"role": "assistant", "content": spoken.strip()})
-            # Give the audio tail time to drain before returning to listening.
-            await asyncio.wait_for(tts.closed.wait(), timeout=15)
+            # Wait for Deepgram to confirm the full reply was rendered before we
+            # hand the floor back. Barge-in cancels this task, so this only
+            # completes on an uninterrupted turn.
+            try:
+                await asyncio.wait_for(tts.flushed.wait(), timeout=15)
+            except asyncio.TimeoutError:
+                pass
         except asyncio.CancelledError:
             raise  # barge-in: propagate so _cancel_agent completes cleanly
         finally:
