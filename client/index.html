@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Agent · Deepgram</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>" />
+</head>
+<body>
+  <main class="stage">
+    <header class="topbar">
+      <div class="brand">🎙️ <span>voice-agent</span></div>
+      <div class="pill" id="statePill"><span class="dot"></span><span id="stateText">idle</span></div>
+    </header>
+
+    <section class="orb-wrap">
+      <div class="orb" id="orb" aria-hidden="true">
+        <canvas id="viz" width="360" height="360"></canvas>
+      </div>
+      <button id="talkBtn" class="talk">Start talking</button>
+      <p class="hint" id="hint">Grant mic access, then just speak. Interrupt any time.</p>
+    </section>
+
+    <section class="transcript" id="transcript" aria-live="polite"></section>
+
+    <footer class="hud">
+      <div class="stat"><span class="k">last</span><span class="v" id="mLast">–</span><span class="u">ms</span></div>
+      <div class="stat"><span class="k">p50</span><span class="v" id="mP50">–</span><span class="u">ms</span></div>
+      <div class="stat headline"><span class="k">p95 mouth→response</span><span class="v" id="mP95">–</span><span class="u">ms</span></div>
+      <div class="stat"><span class="k">turns</span><span class="v" id="mCount">0</span><span class="u"></span></div>
+    </footer>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

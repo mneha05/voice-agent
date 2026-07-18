@@ -1,0 +1,11 @@
+# --- Voice Agent runtime deps ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+websockets==12.0          # pinned: legacy asyncio client uses `extra_headers`
+httpx==0.28.1
+python-dotenv==1.0.1
+numpy==2.2.1
+
+# LLM providers (install the one you use; both are light)
+anthropic==0.42.0
+openai==1.59.6
