@@ -40,41 +40,58 @@ The whole point is one number: **how fast does it talk back?**
 
 <br/>
 
-## 🧠 Why this is hard (and why that's the point)
+## ✨ What it can do
 
-Anyone can wire an STT box to an LLM box to a TTS box. That gives you a **walkie-talkie**:
-you talk, you wait, it talks. It feels dead. A *real* voice agent has to solve the
-problems that only show up when you care about latency and turn-taking:
+A natural, back-and-forth spoken conversation — you talk, it talks back, and you can
+**cut it off any time** just like a real person. Everything streams end-to-end, so it
+feels alive instead of like a walkie-talkie.
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-#### 🚦 End-of-turn detection
-Knowing *when the human is done talking* — not too eager (you cut them off), not too
-slow (awkward pause). Uses Deepgram's `endpointing` + `UtteranceEnd` signals.
+#### 🗣️ Hold a real conversation
+Speak naturally and get a spoken reply in well under a second. It remembers the
+conversation so far, so you can ask follow-ups without repeating yourself.
 
 </td>
 <td width="50%" valign="top">
 
-#### ⏱️ Latency budgeting
-Every millisecond is on a stopwatch. We overlap STT-finalize, LLM-first-token, and
-TTS-first-audio so the reply *starts* before the model has finished thinking.
+#### ✋ Let you interrupt it
+Start talking while it's mid-sentence and it **stops instantly**, drops what it was
+saying, and listens — no talking over each other, no awkward wait.
 
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
 
-#### 📝 Streaming partial transcripts
-Interim results paint on screen as you speak — and double as the **trigger for barge-in**.
+#### 📝 Show live captions
+Your words appear on screen **as you speak them**, and the agent's reply is captioned
+too — great for accessibility and for seeing exactly what it heard.
 
 </td>
 <td width="50%" valign="top">
 
-#### ✋ Barge-in / interruption
-Start talking while it's speaking and it **shuts up instantly**, flushes its audio
-buffer, and starts listening again. This is the feature everyone forgets.
+#### ⏱️ Prove it's fast
+A live meter shows the **mouth-to-response latency** of every turn (last / p50 / p95),
+so the speed isn't a claim — it's measured on screen in real time.
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+#### 🎚️ Know when you're done
+Smart end-of-turn detection waits for you to actually finish a thought before replying —
+not so eager it cuts you off, not so slow it feels laggy.
+
+</td>
+<td width="50%" valign="top">
+
+#### 🔌 Swap the voice & brain
+Change the TTS voice, the language, or the LLM (Claude or GPT) with one line in `.env` —
+no code changes. Tune it snappy or patient to taste.
 
 </td>
 </tr>
